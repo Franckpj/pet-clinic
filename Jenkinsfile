@@ -22,7 +22,7 @@ pipeline {
                     env.SHORT_COMMIT= env.GIT_COMMIT[0..7]
                     env.TAG_NAME="docker.pkg.github.com/$GITHUB_USER/pet-clinic/petclinic:$SHORT_COMMIT"
                 }
-                sh "docker build -t $TAG_NAME -f Dockerfile.deploy"
+                sh "docker build -t $TAG_NAME -f Dockerfile.deploy ."
                 sh "sed -n '2p' /tmp/shortname.txt | docker login https://docker.pkg.github.com -u $GITHUB_USER --password-stdin"
                 sh "docker push $TAG_NAME"
             }
